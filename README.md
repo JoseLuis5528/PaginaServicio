@@ -200,7 +200,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">
-                <i class="bi bi-code-slash me-2"></i>Ing. Software Freelance Jose Luis Rodriguez Elicerio
+                <i class="bi bi-code-slash me-2"></i>Ing. Software Freelance 
             </a>
             <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="https://wa.me/525654255366" target="_blank">
@@ -480,7 +480,7 @@
                     <div class="contact-card">
                         <div class="row align-items-center">
                             <div class="col-md-8">
-                                <h3 class="mb-3">¿Listo para transformar tu clínica veterinaria?</h3>
+                                <h3 class="mb-3">¿Listo para transformar tu negocio?</h3>
                                 <p class="lead mb-4">Agenda una consulta gratuita para analizar tus necesidades</p>
                                 <div class="d-flex flex-wrap gap-3">
                                     <a href="https://wa.me/5654255366" class="btn btn-light btn-lg" target="_blank">
