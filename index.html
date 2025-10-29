@@ -262,7 +262,7 @@
                             <ul class="feature-list">
                                 <li><i class="bi bi-check-circle"></i> Sistema de agendamiento básico</li>
                                 <li><i class="bi bi-check-circle"></i> Panel administrativo simple</li>
-                                <li><i class="bi bi-check-circle"></i> Gestión de clientes y mascotas</li>
+                                <li><i class="bi bi-check-circle"></i> Gestión de clientes y productos</li>
                                 <li><i class="bi bi-check-circle"></i> Diseño responsive</li>
                                 <li><i class="bi bi-check-circle"></i> Base de datos MySQL</li>
                                 <li><i class="bi bi-clock"></i> <strong>Entrega: 1-2 semanas</strong></li>
