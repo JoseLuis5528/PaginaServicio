@@ -247,7 +247,7 @@
     <section class="py-5 mt-5">
         <div class="container">
             <h2 class="section-title">Servicios de Desarrollo</h2>
-            <p class="text-center mb-5">Soluciones completas para automatizar y optimizar tu clínica veterinaria</p>
+            <p class="text-center mb-5">Soluciones completas para automatizar y optimizar tu negocios</p>
             
             <div class="row g-4">
                 <!-- Servicio Básico -->
