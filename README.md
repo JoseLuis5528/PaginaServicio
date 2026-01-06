@@ -3,564 +3,2032 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ing. Software - Sistema Gestión Veterinaria</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <title>Line Balance Dashboard - Industrial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #1a2a6c;
-            --secondary-color: #2a3f7c;
-            --accent-color: #4caf50;
-            --light-color: #e8eaf6;
-        }
-        
-        body {
-            background-color: #f8f9fa;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
-        .navbar-custom {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
         }
-        
-        .hero-section {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+
+        /* Panel Lateral Izquierdo */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
             color: white;
-            padding: 100px 0;
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 3px 0 10px rgba(0,0,0,0.1);
+            z-index: 100;
         }
-        
-        .profile-img {
-            width: 200px;
-            height: 200px;
-            border: 5px solid white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        
-        .service-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-            overflow: hidden;
-            height: 100%;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .service-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 30px 20px;
+
+        .user-info {
             text-align: center;
-        }
-        
-        .service-popular {
-            border: 3px solid var(--accent-color);
-            position: relative;
-        }
-        
-        .popular-badge {
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            background: var(--accent-color);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-        
-        .price-amount {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-        
-        .price-period {
-            color: rgba(255,255,255,0.8);
-            font-size: 1rem;
-        }
-        
-        .feature-list {
-            list-style: none;
-            padding: 0;
-            margin: 30px 0;
-        }
-        
-        .feature-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .feature-list li:last-child {
-            border-bottom: none;
-        }
-        
-        .feature-list li i {
-            color: var(--accent-color);
-            margin-right: 10px;
-        }
-        
-        .btn-primary-custom {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 10px;
-            padding: 12px 30px;
-            font-weight: 600;
-            transition: all 0.3s;
-            color: white;
-        }
-        
-        .btn-primary-custom:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(26, 42, 108, 0.3);
-        }
-        
-        .tech-stack {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .tech-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            color: var(--primary-color);
-        }
-        
-        .benefit-card {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            height: 100%;
-            transition: transform 0.3s;
-        }
-        
-        .benefit-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .benefit-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             margin-bottom: 20px;
         }
-        
-        .process-step {
-            text-align: center;
-            padding: 30px;
+
+        .user-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 5px;
         }
-        
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: var(--primary-color);
-            color: white;
-            border-radius: 50%;
+
+        .user-info p {
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0 auto 20px;
-        }
-        
-        .contact-card {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            gap: 12px;
+            background: rgba(255,255,255,0.1);
             color: white;
-            border-radius: 15px;
-            padding: 40px;
+            text-align: left;
         }
-        
-        .certification-badge {
-            background: var(--accent-color);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 0.9rem;
+
+        .sidebar-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+
+        .sidebar-btn i {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-section h4 {
+            font-size: 14px;
+            color: #bdc3c7;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Contenido Principal */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .current-date {
+            color: #666;
+            font-size: 14px;
+            background: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 6px;
+        }
+
+        /* Métricas Principales */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 5px solid #3498db;
+        }
+
+        .metric-card.lbr {
+            border-top-color: #1a2980;
+        }
+
+        .metric-card.uph {
+            border-top-color: #2c3e50;
+        }
+
+        .metric-card.bottleneck {
+            border-top-color: #c0392b;
+        }
+
+        .metric-card.gold {
+            border-top-color: #FFD700;
+        }
+
+        .metric-card h3 {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
             display: inline-block;
-            margin: 5px;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-gold {
+            background: linear-gradient(135deg, #6be905 0%, #1ef003 100%);
+            color: #333;
+        }
+
+        .status-silver {
+            background: linear-gradient(135deg, #C0C0C0 0%, #A9A9A9 100%);
+            color: #333;
+        }
+
+        .status-bronze {
+            background: linear-gradient(135deg, #cd7f32 0%, #b87333 100%);
+            color: white;
+        }
+
+        .status-none {
+            background: #f81201;
+            color: #f8f8f8;
+            border: 1px solid #ddd;
+        }
+
+        /* Tabla de Procesos */
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1400px;
+        }
+
+        th {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            font-weight: 600;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        tr:hover {
+            background: #f0f7ff;
+        }
+
+        .bottleneck-cell {
+            background-color: #ffebee !important;
+            color: #c62828;
+            font-weight: bold;
+        }
+
+        .machine-time-cell {
+            background-color: #fff3e0 !important;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .edit-btn {
+            background: #3498db;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .add-btn {
+            background: #2ecc71;
+            color: white;
+        }
+
+        input[type="text"], input[type="number"], select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            text-align: center;
+            font-size: 13px;
+            background-color: white;
+        }
+
+        input:read-only {
+            background-color: #f8f9fa;
+            cursor: not-allowed;
+        }
+
+        input.auto-calculated {
+            background-color: #fff3e0 !important;
+            border: 1px solid #ffb74d !important;
+            color: #e65100 !important;
+            font-weight: bold !important;
+        }
+
+        /* Fórmula Industrial */
+        .formula-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            border-left: 6px solid #2ecc71;
+        }
+
+        .formula-title {
+            color: #2c3e50;
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .formula-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 15px;
+        }
+
+        .formula-equation {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 18px;
+            text-align: center;
+            color: #2c3e50;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+
+        .formula-definition {
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+            margin-top: 15px;
+        }
+
+        .formula-definition h5 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .formula-definition ul {
+            padding-left: 20px;
+            color: #555;
+        }
+
+        .formula-definition li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        /* Gráfico Industrial */
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        .chart-title {
+            color: #2c3e50;
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-wrapper {
+            height: 350px;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* Ejes del gráfico */
+        .chart-axes {
+            position: absolute;
+            top: 20px;
+            left: 60px;
+            right: 20px;
+            bottom: 40px;
+            border-left: 2px solid #333;
+            border-bottom: 2px solid #333;
+        }
+
+        /* Etiquetas del eje Y */
+        .y-axis-labels {
+            position: absolute;
+            left: -50px;
+            top: 0;
+            bottom: 0;
+            width: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .y-label {
+            text-align: right;
+            padding-right: 10px;
+            font-size: 12px;
+            color: #666;
+            transform: translateY(50%);
+        }
+
+        /* Etiquetas del eje X */
+        .x-axis-labels {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -30px;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 60px;
+        }
+
+        .x-label {
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            transform: rotate(-45deg);
+            transform-origin: left top;
+            width: 20px;
+            white-space: nowrap;
+        }
+
+        /* Barras del gráfico */
+        .chart-bars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 0 60px 0 60px;
+        }
+
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            width: 40px;
+            position: relative;
+        }
+
+        .bar-container {
+            width: 30px;
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        .bar {
+            width: 100%;
+            background: linear-gradient(to top, #3498db 0%, #2980b9 100%);
+            border-radius: 3px 3px 0 0;
+            position: relative;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .bar.bottleneck {
+            background: linear-gradient(to top, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .bar:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .process-name {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            font-size: 11px;
+            color: #666;
+            white-space: nowrap;
+            width: 60px;
+            text-align: left;
+        }
+
+        /* Línea de bottleneck */
+        .bottleneck-line {
+            position: absolute;
+            left: 60px;
+            right: 20px;
+            border-top: 2px dashed #e74c3c;
+            z-index: 10;
+        }
+
+        .bottleneck-label {
+            position: absolute;
+            right: -40px;
+            background: #e74c3c;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* Leyenda */
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+
+        .legend-normal {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+
+        .legend-bottleneck {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        /* Etiqueta del eje Y */
+        .y-axis-title {
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-90deg);
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Etiqueta del eje X */
+        .x-axis-title {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* Líneas de grid */
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 60px;
+            right: 20px;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .grid-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 12px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            min-width: 400px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 250px;
+            }
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .btn-group {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .sidebar-btn {
+                flex: 1;
+                min-width: 150px;
+            }
+            .chart-wrapper {
+                height: 300px;
+            }
+            .x-label {
+                font-size: 9px;
+            }
+            .modal-content {
+                min-width: 90vw;
+                margin: 10px;
+            }
+        }
+
+        /* Notas de la tabla */
+        .table-note {
+            font-size: 12px;
+            color: #666;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .table-note i {
+            color: #3498db;
+            margin-right: 5px;
+        }
+
+        /* Tooltip para explicar cálculos */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Total Head Count */
+        .total-hc {
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .total-hc-label {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .total-hc-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .total-hc-note {
+            font-size: 12px;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Estilo para campos vacíos */
+        .empty-field {
+            background-color: #fff !important;
+            border: 1px solid #ddd !important;
+            color: #333 !important;
+        }
+
+        .required-field {
+            border: 1px solid #ff9800 !important;
+            background-color: #fff3e0 !important;
+        }
+
+        /* Estilos específicos para la nueva gráfica */
+        #chartCanvas {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .chart-bar {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .chart-bar:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .process-label {
+            font-size: 11px;
+            color: #555;
+            text-align: center;
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#">
-                <i class="bi bi-code-slash me-2"></i>Ing. Software Freelance 
-            </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="https://wa.me/525654255366" target="_blank">
-                    <i class="bi bi-whatsapp me-1"></i>WhatsApp
-                </a>
+    <!-- Panel Lateral Izquierdo -->
+    <div class="sidebar">
+        <div class="user-info">
+            <h3>Jose Luis Rodríguez</h3>
+            <p>Line Balance App-Web</p>
+        </div>
+
+        <div class="btn-group">
+            <button class="sidebar-btn" onclick="importData()">
+                <i class="fas fa-file-import"></i>
+                <span>Importar Favoritos</span>
+            </button>
+            <button class="sidebar-btn" onclick="saveAndClear()">
+                <i class="fas fa-save"></i>
+                <span>Guardar y Limpiar</span>
+            </button>
+            <button class="sidebar-btn" onclick="loadHistory()">
+                <i class="fas fa-history"></i>
+                <span>Cargar Historial</span>
+            </button>
+        </div>
+
+        <div class="sidebar-section">
+            <h4>Opciones de Reporte</h4>
+            <div class="btn-group">
+                <button class="sidebar-btn" onclick="generatePDF()">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Generar PDF</span>
+                </button>
+                <button class="sidebar-btn" onclick="clearTable()">
+                    <i class="fas fa-broom"></i>
+                    <span>Limpiar Tabla</span>
+                </button>
+                <button class="sidebar-btn" onclick="clearWithConfirmation()">
+                    <i class="fas fa-trash"></i>
+                    <span>Eliminar Todo</span>
+                </button>
             </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1 class="display-4 fw-bold mb-4">Desarrollo de Software </h1>
-                    <p class="lead mb-4">Ingeniero de Software Freelance - Soluciones personalizadas y eficientes</p>
-                    <div class="d-flex flex-wrap gap-2 mb-4">
-                        <span class="certification-badge">PHP/MySQL</span>
-                        <span class="certification-badge">JavaScript</span>
-                        <span class="certification-badge">Bootstrap 5</span>
-                        <span class="certification-badge">Desarrollo Full-Stack</span>
-                    </div>
-                    <a href="https://wa.me/525654255366" class="btn btn-light btn-lg">
-                        <i class="bi bi-calendar-check me-2"></i>Solicitar Cotización
-                    </a>
+        <div >
+            <h6>@2026 Software Development Engineering</h6>
+        </div>
+    </div>
+    
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <!-- Encabezado -->
+        <div class="header">
+            <h1>
+                <i class="fas fa-industry"></i>
+                Line Balance Dashboard - Industrial
+            </h1>
+            <div class="current-date" id="currentDate"></div>
+        </div>
+
+        <!-- Métricas Principales -->
+        <div class="metrics-grid">
+            <div class="metric-card lbr">
+                <h3>Line Balance Rate (LBR)</h3>
+                <div class="metric-value" id="balancePercentage">0.00%</div>
+                <div class="lpsh-label">Eficiencia de Línea</div>
+            </div>
+
+            <div class="metric-card uph">
+                <h3>Units Per Hour (UPH)</h3>
+                <div class="metric-value" id="upmValue">0</div>
+                <div class="lpsh-label">Total Head Count</div>
+            </div>
+
+            <div class="metric-card bottleneck">
+                <h3>Bottleneck Time</h3>
+                <div class="metric-value" id="bottleneckTime">0.00</div>
+                <div class="lpsh-label">Tiempo Cuello de Botella</div>
+            </div>
+
+            <div class="metric-card gold">
+                <h3>Goal Status</h3>
+                <div class="metric-value">
+                    <span class="status-badge status-none" id="goldStatus">No cumple</span>
                 </div>
-                <div class="col-md-4 text-center">
-                    <img src="perfil2.png" alt="Ingeniero de Software" class="profile-img rounded-circle">
-                    <h4 class="mt-3">Jose Luis Rodriguez</h4>
-                    <p class="text-light">Ingeniero de Software</p>
-                    <div class="text-warning">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        
-                    </div>
-                </div>
+                <div class="lpsh-label">Estado de Calidad</div>
             </div>
         </div>
-    </section>
 
-    <!-- Services Section -->
-    <section class="py-5 mt-5">
-        <div class="container">
-            <h2 class="section-title">Servicios de Desarrollo</h2>
-            <p class="text-center mb-5">Soluciones completas para automatizar y optimizar tu negocios</p>
+        <!-- Fórmula Industrial -->
+        <div class="formula-section">
+            <div class="formula-box">
+                <!-- La fórmula se mostrará aquí si es necesario -->
+            </div>
+            <!--
+            <div class="formula-definition">
+                <h5>Definiciones Industriales:</h5>
+                <ul>
+                    <li><strong>Tiempo del Cuello de Botella</strong> = Máximo de "Std Time for 1 unit"</li>
+                    <li><strong>UPH (Units Per Hour)</strong> = Σ Head Count (Suma total de operadores)</li>
+                    <li><strong>Σ Tiempos de Ciclo</strong> = Suma de todos los "Std Time for 1 unit" de procesos con operador</li>
+                    <li><strong>Número de Procesos con Operador</strong> = Cantidad de procesos con Head Count > 0</li>
+                    <li><strong>Operator Bus/Time</strong> = Std Time for 1 unit (calculado automáticamente)</li>
+                    <li><strong>Machine Bus/Time</strong> = MACH Std Time (cuando hay tiempo de máquina)</li>
+                    <li><strong>Output per Cycle (Capacity)</strong> = Preferentemente realizado solo por el operador</li>
+                </ul>
+            </div>
+        </div>
+        -->
+
+        <!-- Tabla de Procesos -->
+        <div class="table-container">
+            <table id="processTable">
+                <thead>
+                    <tr>
+                        <th>PROCESS</th>
+                        <th>HAND Std Time</th>
+                        <th>IMT Std Time</th>
+                        <th>MACH Std Time</th>
+                        <th>#Mach</th>
+                        <th>Head Count</th>
+                        <th>#Mach per HC</th>
+                        <th>Output per Cycle (Capacity)</th>
+                        <th>Operator Busy/Time</th>
+                        <th>Machine Busy/Time</th>
+                        <th>Std Time for 1 unit</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Las filas se generarán dinámicamente -->
+                </tbody>
+            </table>
+            <div class="total-hc">
+                <div>
+                    <div class="total-hc-label">Total Head Count (UPH):</div>
+                    <div class="total-hc-note">Suma manual de todos los Head Count ingresados por el usuario</div>
+                </div>
+                <div class="total-hc-value" id="totalHeadCount">0</div>
+            </div>
+            <div class="table-note">
+                <i class="fas fa-info-circle"></i>
+                Nota: Todos los campos deben ser ingresados manualmente por el usuario. 
+                Operator Bus/Time se calcula automáticamente igual a Std Time for 1 unit. 
+                Machine Busy/Time se calcula automáticamente igual al valor de MACH Std Time cuando este es ingresado.
+            </div>
+        </div>
+
+        <!-- Gráfico Industrial MEJORADO -->
+        <div class="chart-container">
+            <h3 class="chart-title"><i class="fas fa-chart-bar"></i> Line Balance to Bottleneck</h3>
+            <div class="chart-wrapper">
+                <div class="chart-axes" id="chartArea">
+                    <!-- El gráfico se generará aquí dinámicamente -->
+                    <div id="chartCanvas" style="position: relative; width: 100%; height: 100%;"></div>
+                </div>
+            </div>
             
-            <div class="row g-4">
-                <!-- Servicio Básico -->
-                <div class="col-md-4">
-                    <div class="service-card h-100">
-                        <div class="service-header">
-                            <h4>Plan Básico</h4>
-                            <div class="price-amount">$14,000</div>
-                            <div class="price-period">Pago único • 1-2 semanas</div>
-                        </div>
-                        <div class="card-body p-4">
-                            <ul class="feature-list">
-                                <li><i class="bi bi-check-circle"></i> Sistema de agendamiento básico</li>
-                                <li><i class="bi bi-check-circle"></i> Panel administrativo simple</li>
-                                <li><i class="bi bi-check-circle"></i> Gestión de clientes y productos</li>
-                                <li><i class="bi bi-check-circle"></i> Diseño responsive</li>
-                                <li><i class="bi bi-check-circle"></i> Base de datos MySQL</li>
-                                <li><i class="bi bi-clock"></i> <strong>Entrega: 1-2 semanas</strong></li>
-                                <li><i class="bi bi-headset"></i> Soporte técnico: 30 días</li>
-                            </ul>
-                            <div class="text-center">
-                                <a href="https://wa.me/525654255366?text=Me interesa el Plan Básico de $14,000 MXN" 
-                                   class="btn btn-outline-primary w-100" target="_blank">
-                                    <i class="bi bi-whatsapp me-2"></i>Solicitar
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <div class="legend-color legend-normal"></div>
+                    <span>Std Time Normal</span>
                 </div>
-
-                <!-- Servicio Estándar (Recomendado) -->
-                <div class="col-md-4">
-                    <div class="service-card h-100 service-popular">
-                        <div class="popular-badge">MÁS SOLICITADO</div>
-                        <div class="service-header">
-                            <h4>Plan Estándar</h4>
-                            <div class="price-amount">$31,000</div>
-                            <div class="price-period">Pago único • 3-4 semanas</div>
-                        </div>
-                        <div class="card-body p-4">
-                            <ul class="feature-list">
-                                <li><i class="bi bi-check-circle"></i> <strong>Sistema completo de gestión</strong></li>
-                                <li><i class="bi bi-check-circle"></i> Roles: Cliente y Administrador</li>
-                                <li><i class="bi bi-check-circle"></i> Reprogramación y cancelación</li>
-                                <li><i class="bi bi-check-circle"></i> Historial médico completo</li>
-                                <li><i class="bi bi-check-circle"></i> Validación de horarios</li>
-                                <li><i class="bi bi-check-circle"></i> Control de días festivos</li>
-                                <li><i class="bi bi-clock"></i> <strong>Entrega: 3-4 semanas</strong></li>
-                                <li><i class="bi bi-headset"></i> <strong>Soporte: 60 días incluido</strong></li>
-                            </ul>
-                            <div class="text-center">
-                                <a href="https://wa.me/525654255366?text=Me interesa el Plan Estándar de $31,000 MXN" 
-                                   class="btn btn-primary-custom w-100" target="_blank">
-                                    <i class="bi bi-whatsapp me-2"></i>Cotizar Ahora
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Servicio Premium -->
-                <div class="col-md-4">
-                    <div class="service-card h-100">
-                        <div class="service-header">
-                            <h4>Plan Premium</h4>
-                            <div class="price-amount">$52,000</div>
-                            <div class="price-period">Pago único • 5-6 semanas</div>
-                        </div>
-                        <div class="card-body p-4">
-                            <ul class="feature-list">
-                                <li><i class="bi bi-check-circle"></i> Todo el plan Estándar +</li>
-                                <li><i class="bi bi-check-circle"></i> Recordatorios automáticos</li>
-                                <li><i class="bi bi-check-circle"></i> Integración WhatsApp/Email</li>
-                                <li><i class="bi bi-check-circle"></i> App móvil básica</li>
-                                <li><i class="bi bi-check-circle"></i> Reportes avanzados</li>
-                                <li><i class="bi bi-check-circle"></i> Dashboard analítico</li>
-                                <li><i class="bi bi-clock"></i> <strong>Entrega: 5-6 semanas</strong></li>
-                                <li><i class="bi bi-headset"></i> Soporte: 90 días incluido</li>
-                            </ul>
-                            <div class="text-center">
-                                <a href="https://wa.me/525654255366?text=Me interesa el Plan Premium de $52,000 MXN" 
-                                   class="btn btn-outline-primary w-100" target="_blank">
-                                    <i class="bi bi-whatsapp me-2"></i>Solicitar
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="legend-item">
+                    <div class="legend-color legend-bottleneck"></div>
+                    <span>Cuello de Botella</span>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- ROI Section -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title">Inversión Inteligente con ROI Garantizado</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="benefit-card">
-                        <div class="benefit-icon">
-                            <i class="bi bi-clock"></i>
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 Line Balance Dashboard - Aplicación realizada por estudiante Jose Luis Rodriguez Elicerio, Todos los derechos reservados</p>
+        </div>
+    </div>
+
+    <!-- Scripts para PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <script>
+        // Configuración inicial
+        let processes = [];
+        let configurationHistory = [];
+        const STORAGE_KEY = 'lineBalanceConfig';
+        const HISTORY_KEY = 'lineBalanceHistory';
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', function() {
+            // Establecer fecha actual
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = 
+                now.toLocaleDateString('es-ES', options);
+            
+            // Cargar datos guardados
+            loadFromStorage();
+            
+            // Si no hay datos, crear uno por defecto
+            if (processes.length === 0) {
+                processes.push({
+                    name: 'Process 1',
+                    handSutTime: '',
+                    imtSutTime: '',
+                    machSutTime: '',
+                    Mach: '',
+                    headCount: '',
+                    modePerEC: '',
+                    outputPerCycle: '',
+                    operatorBusTime: 0,
+                    machinesBusTime: 0,
+                    sutTimeForUnit: 0
+                });
+            }
+            
+            // Renderizar tabla inicial
+            renderTable();
+            
+            // Generar gráfica inicial después de un breve delay
+            setTimeout(() => {
+                updateChart();
+            }, 300);
+        });
+
+        // ========== FUNCIÓN RENDERIZAR TABLA ==========
+        function renderTable() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            // Primero calcular tiempos y encontrar bottleneck
+            let bottleneckValue = 0;
+            
+            processes.forEach((process, index) => {
+                const handTime = parseFloat(process.handSutTime) || 0;
+                const imtTime = parseFloat(process.imtSutTime) || 0;
+                const machTime = parseFloat(process.machSutTime) || 0;
+                
+                // Calcular Std Time for 1 unit
+                const stdTimeForUnit = handTime + imtTime + machTime;
+                process.sutTimeForUnit = stdTimeForUnit;
+                
+                if (stdTimeForUnit > bottleneckValue) {
+                    bottleneckValue = stdTimeForUnit;
+                }
+            });
+            
+            // Renderizar cada fila
+            processes.forEach((process, index) => {
+                const handTime = parseFloat(process.handSutTime) || 0;
+                const imtTime = parseFloat(process.imtSutTime) || 0;
+                const machTime = parseFloat(process.machSutTime) || 0;
+                
+                // Std Time for 1 unit
+                const stdTimeForUnit = handTime + imtTime + machTime;
+                
+                // Machine Busy/Time = MACH Std Time si hay
+                let machinesBusTime = 0;
+                if (machTime > 0) {
+                    machinesBusTime = machTime;
+                }
+                
+                // Operator Bus/Time = Std Time for 1 unit
+                const operatorBusTime = stdTimeForUnit;
+                
+                // Actualizar proceso
+                process.sutTimeForUnit = stdTimeForUnit;
+                process.operatorBusTime = operatorBusTime;
+                process.machinesBusTime = machinesBusTime;
+                
+                const isBottleneck = stdTimeForUnit === bottleneckValue && bottleneckValue > 0;
+                const hasMachineTime = machTime > 0;
+                
+                const row = document.createElement('tr');
+                if (isBottleneck) {
+                    row.style.backgroundColor = '#ffebee';
+                }
+                
+                row.innerHTML = `
+                    <td>
+                        <input type="text" value="${process.name}" placeholder="Nombre del proceso"
+                               onchange="updateProcess(${index}, 'name', this.value)">
+                    </td>
+                    <td>
+                        <input type="number" step="0.01" placeholder="0.00" value="${process.handSutTime}"
+                               onchange="updateProcess(${index}, 'handSutTime', this.value)" class="empty-field">
+                    </td>
+                    <td>
+                        <input type="number" step="0.01" placeholder="0.00" value="${process.imtSutTime}"
+                               onchange="updateProcess(${index}, 'imtSutTime', this.value)" class="empty-field">
+                    </td>
+                    <td>
+                        <input type="number" step="0.01" placeholder="0.00" value="${process.machSutTime}"
+                               onchange="updateProcess(${index}, 'machSutTime', this.value)" class="empty-field">
+                    </td>
+                    <td>
+                        <input type="number" placeholder="" value="${process.Mach}"
+                               onchange="updateProcess(${index}, 'Mach', this.value)" class="empty-field">
+                    </td>
+                    <td>
+                        <input type="number" placeholder="" value="${process.headCount}"
+                               onchange="updateProcess(${index}, 'headCount', this.value)" class="empty-field required-field">
+                    </td>
+                    <td>
+                        <input type="number" placeholder="" value="${process.modePerEC}"
+                               onchange="updateProcess(${index}, 'modePerEC', this.value)" class="empty-field">
+                    </td>
+                    <td>
+                        <input type="number" step="0.01" placeholder="" value="${process.outputPerCycle}"
+                               onchange="updateProcess(${index}, 'outputPerCycle', this.value)" class="empty-field">
+                    </td>
+                    <td style="background-color: #f8f9fa;">
+                        <input type="number" step="0.01" value="${operatorBusTime.toFixed(2)}" readonly
+                               title="Operator Bus/Time = Std Time for 1 unit">
+                    </td>
+                    <td ${hasMachineTime ? 'class="machine-time-cell"' : ''}>
+                        <div class="tooltip">
+                            <input type="number" step="0.01" value="${machinesBusTime.toFixed(2)}" 
+                                   ${hasMachineTime ? 'class="auto-calculated" readonly' : 'class="empty-field"'}
+                                   onchange="${hasMachineTime ? '' : `updateProcess(${index}, 'machinesBusTime', this.value)`}"
+                                   title="${hasMachineTime ? 'Calculado automáticamente: Machine Busy/Time = MACH Std Time' : 'Ingrese manualmente el tiempo de máquina'}">
+                            ${hasMachineTime ? '<div class="tooltip-text">Auto-calculado: Machine Busy/Time = MACH Std Time</div>' : ''}
                         </div>
-                        <h5>Ahorro de Tiempo</h5>
-                        <p>Automatización de procesos administrativos</p>
-                        <h4 class="text-success">$5,000 - $7,000 MXN/mes</h4>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="benefit-card">
-                        <div class="benefit-icon">
-                            <i class="bi bi-calendar-x"></i>
-                        </div>
-                        <h5>Optimización de Citas</h5>
-                        <p>Reducción de citas perdidas y mejor organización</p>
-                        <h4 class="text-success">$3,500 - $8,600 MXN/mes</h4>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="benefit-card">
-                        <div class="benefit-icon">
-                            <i class="bi bi-graph-up"></i>
-                        </div>
-                        <h5>Eficiencia Operativa</h5>
-                        <p>Mejora en la gestión y atención al cliente</p>
-                        <h4 class="text-success">$2,600 - $4,300 MXN/mes</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-5">
-                <div class="alert alert-success d-inline-block">
-                    <h4 class="mb-2">ROI Total Estimado: $11,100 - $19,900 MXN/mes</h4>
-                    <p class="mb-0 fw-bold">¡Tu inversión se recupera en 2-4 meses!</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                    </td>
+                    <td class="${isBottleneck ? 'bottleneck-cell' : ''}" style="font-weight: bold;">
+                        ${stdTimeForUnit.toFixed(2)}
+                        ${isBottleneck ? '<br><small style="color:#c62828;font-size:10px;">BOTTLENECK</small>' : ''}
+                    </td>
+                    <td class="actions-cell">
+                        <button class="action-btn edit-btn" onclick="editProcess(${index})" title="Editar proceso">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn" onclick="deleteProcess(${index})" title="Eliminar proceso">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="action-btn add-btn" onclick="addRowAfter(${index})" title="Agregar proceso después">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
 
-    <!-- Tech Stack -->
-    <section class="py-5">
-        <div class="container">
-            <h2 class="section-title">Tecnologías y Metodología</h2>
-            <div class="tech-stack">
-                <div class="row text-center">
-                    <div class="col-md-3 mb-4">
-                        <i class="bi bi-filetype-php tech-icon"></i>
-                        <h5>PHP 8.x</h5>
-                        <p class="text-muted">Backend robusto y seguro</p>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <i class="bi bi-database tech-icon"></i>
-                        <h5>MySQL</h5>
-                        <p class="text-muted">Base de datos relacional</p>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <i class="bi bi-bootstrap tech-icon"></i>
-                        <h5>Bootstrap 5</h5>
-                        <p class="text-muted">Diseño responsive</p>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <i class="bi bi-javascript tech-icon"></i>
-                        <h5>JavaScript</h5>
-                        <p class="text-muted">Interactividad y validaciones</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            // Calcular métricas y actualizar gráfica
+            calculateMetrics();
+            saveToStorage();
+        }
 
-    <!-- Development Process -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title">Proceso de Desarrollo</h2>
-            <div class="row">
-                <div class="col-md-4 process-step">
-                    <div class="step-number">1</div>
-                    <h5>Análisis y Planificación</h5>
-                    <p>Reunión inicial para entender tus necesidades y planificar el proyecto</p>
-                </div>
-                <div class="col-md-4 process-step">
-                    <div class="step-number">2</div>
-                    <h5>Desarrollo Iterativo</h5>
-                    <p>Desarrollo por módulos con revisiones constantes y feedback</p>
-                </div>
-                <div class="col-md-4 process-step">
-                    <div class="step-number">3</div>
-                    <h5>Entrega y Soporte</h5>
-                    <p>Implementación, capacitación y soporte post-entrega</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        // ========== ACTUALIZAR PROCESO ==========
+        function updateProcess(index, field, value) {
+            if (index >= 0 && index < processes.length) {
+                processes[index][field] = value;
+                
+                // Si se actualiza tiempo de máquina, actualizar Machine Busy/Time
+                if (field === 'machSutTime') {
+                    const machTime = parseFloat(value) || 0;
+                    if (machTime > 0) {
+                        processes[index].machinesBusTime = machTime;
+                    }
+                }
+                
+                // Re-renderizar la tabla
+                setTimeout(() => {
+                    renderTable();
+                    updateChart();
+                }, 50);
+            }
+        }
 
-    <!-- Payment Plans -->
-    <section class="py-5">
-        <div class="container">
-            <h2 class="section-title">Planes de Pago Flexibles</h2>
-            <div class="row g-4 justify-content-center">
-                <div class="col-md-4">
-                    <div class="text-center p-4 border rounded h-100">
-                        <h4>Plan 50/50</h4>
-                        <div class="price-amount text-primary">$31,000</div>
-                        <p><strong>50% inicial:</strong> $15,500<br><strong>50% final:</strong> $15,500</p>
-                        <small class="text-success fw-bold">Recomendado para proyectos estándar</small>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="text-center p-4 border rounded h-100">
-                        <h4>Plan 40/30/30</h4>
-                        <div class="price-amount text-primary">$31,000</div>
-                        <p><strong>40% inicial:</strong> $12,400<br><strong>30% avance:</strong> $9,300<br><strong>30% final:</strong> $9,300</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="text-center p-4 border rounded h-100">
-                        <h4>Personalizado</h4>
-                        <div class="price-amount text-primary">Consultar</div>
-                        <p>Planes a 3-6 meses sin intereses<br>Pregunta por nuestras opciones</p>
-                        <small class="text-muted">Sujeto a evaluación</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        // ========== AGREGAR NUEVA FILA ==========
+        function addRowAfter(index) {
+            const newProcess = {
+                name: `Process ${processes.length + 1}`,
+                handSutTime: '',
+                imtSutTime: '',
+                machSutTime: '',
+                Mach: '',
+                headCount: '',
+                modePerEC: '',
+                outputPerCycle: '',
+                operatorBusTime: 0,
+                machinesBusTime: 0,
+                sutTimeForUnit: 0
+            };
+            
+            processes.splice(index + 1, 0, newProcess);
+            renderTable();
+            updateChart();
+        }
 
-    <!-- Contact Section -->
-    <section id="contacto" class="py-5 bg-light">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <div class="contact-card">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <h3 class="mb-3">¿Listo para transformar tu negocio?</h3>
-                                <p class="lead mb-4">Agenda una consulta gratuita para analizar tus necesidades</p>
-                                <div class="d-flex flex-wrap gap-3">
-                                    <a href="https://wa.me/5654255366" class="btn btn-light btn-lg" target="_blank">
-                                        <i class="bi bi-whatsapp me-2"></i>WhatsApp
-                                    </a>
-                                    <a href="mailto:rodriguezeliceriojoseluis@gmail.com" class="btn btn-outline-light btn-lg">
-                                        <i class="bi bi-envelope me-2"></i>Email
-                                    </a>
-                                    <a href="tel:+525654255366" class="btn btn-outline-light btn-lg">
-                                        <i class="bi bi-telephone me-2"></i>Llamar
-                                    </a>
+        // ========== ELIMINAR PROCESO ==========
+        function deleteProcess(index) {
+            if (processes.length > 1) {
+                if (confirm('¿Eliminar este proceso?')) {
+                    processes.splice(index, 1);
+                    renderTable();
+                    updateChart();
+                }
+            } else {
+                alert('Debe haber al menos un proceso.');
+            }
+        }
+
+        // ========== CALCULAR MÉTRICAS ==========
+      function calculateMetrics() {
+    // 1. Calcular bottleneck (máximo de Std Time for 1 unit)
+    let bottleneck = 0;
+    processes.forEach(process => {
+        const stdTime = parseFloat(process.sutTimeForUnit) || 0;
+        if (stdTime > bottleneck) {
+            bottleneck = stdTime;
+        }
+    });
+    
+    // 2. Calcular UPH - CORREGIDO: 3600 segundos / bottleneck time
+    let uph = 0;
+    if (bottleneck > 0) {
+        uph = 3600 / bottleneck; // 3600 segundos en 1 hora
+    }
+    
+    // 3. Calcular Total Head Count (suma manual)
+    let totalHeadCount = 0;
+    processes.forEach(process => {
+        const hc = parseInt(process.headCount);
+        if (!isNaN(hc)) {
+            totalHeadCount += hc;
+        }
+    });
+    
+    // 4. Calcular LBR
+    let lbr = 0;
+    let totalCycleTime = 0;
+    let processesWithOperator = 0;
+    
+    processes.forEach(process => {
+        const hc = parseInt(process.headCount) || 0;
+        const stdTime = parseFloat(process.sutTimeForUnit) || 0;
+        
+        if (hc > 0) {
+            totalCycleTime += stdTime;
+            processesWithOperator++;
+        }
+    });
+    
+    if (processesWithOperator > 0 && bottleneck > 0) {
+        lbr = (totalCycleTime / (processesWithOperator * bottleneck)) * 100;
+    }
+    
+    // Actualizar UI - NOTA: Cambié 'upmValue' por 'uphValue' para ser consistente
+    document.getElementById('balancePercentage').textContent = lbr.toFixed(2) + '%';
+    document.getElementById('bottleneckTime').textContent = bottleneck.toFixed(2);
+    document.getElementById('upmValue').textContent = uph.toFixed(2); // Ahora muestra UPH
+    document.getElementById('totalHeadCount').textContent = totalHeadCount; // Head Count va en su propio lugar
+    
+    // Actualizar Gold Status
+    updateGoldStatus(lbr);
+}
+        // ========== ACTUALIZAR GOLD STATUS ==========
+        function updateGoldStatus(lbr) {
+            const goldStatus = document.getElementById('goldStatus');
+            
+            if (lbr >= 90) {
+                goldStatus.textContent = 'GOAL';
+                goldStatus.className = 'status-badge status-gold';
+            } else if (lbr >= 80) {
+                goldStatus.textContent = 'Silver';
+                goldStatus.className = 'status-badge status-silver';
+            } else if (lbr >= 70) {
+                goldStatus.textContent = 'Bronze';
+                goldStatus.className = 'status-badge status-bronze';
+            } else {
+                goldStatus.textContent = 'No cumple';
+                goldStatus.className = 'status-badge status-none';
+            }
+        }
+
+        // ========== GRÁFICA MEJORADA - TIEMPOS EN SEGUNDOS ==========
+        function updateChart() {
+            console.log("🔄 Actualizando gráfica...");
+            
+            const chartCanvas = document.getElementById('chartCanvas');
+            if (!chartCanvas) {
+                console.error("❌ No se encontró el elemento chartCanvas");
+                return;
+            }
+            
+            // Limpiar gráfica anterior
+            chartCanvas.innerHTML = '';
+            
+            // Obtener datos de los procesos
+            const chartData = [];
+            let maxTime = 0;
+            let bottleneckValue = 0;
+            
+            // Procesar datos de la tabla
+            processes.forEach((process, index) => {
+                // Calcular Std Time for 1 unit (suma de HAND + IMT + MACH)
+                const handTime = parseFloat(process.handSutTime) || 0;
+                const imtTime = parseFloat(process.imtSutTime) || 0;
+                const machTime = parseFloat(process.machSutTime) || 0;
+                const stdTime = handTime + imtTime + machTime;
+                
+                chartData.push({
+                    name: process.name || `Process ${index + 1}`,
+                    time: stdTime,
+                    isBottleneck: false
+                });
+                
+                // Encontrar máximo y bottleneck
+                if (stdTime > maxTime) {
+                    maxTime = stdTime;
+                }
+            });
+            
+            // Identificar bottleneck (el proceso con mayor tiempo)
+            if (maxTime > 0) {
+                chartData.forEach(data => {
+                    if (data.time === maxTime) {
+                        data.isBottleneck = true;
+                        bottleneckValue = maxTime;
+                    }
+                });
+            }
+            
+            // Si no hay datos o todos son cero
+            if (chartData.length === 0 || maxTime === 0) {
+                chartCanvas.innerHTML = `
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                                text-align: center; color: #999; font-size: 14px; padding: 20px;">
+                        <i class="fas fa-chart-bar" style="font-size: 48px; margin-bottom: 15px; color: #e0e0e0; display: block;"></i>
+                        <strong>No hay datos para mostrar</strong><br>
+                        <small>Ingresa tiempos en los campos HAND, IMT o MACH para ver la gráfica</small>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Configuración del gráfico
+            const chartHeight = 280;
+            const chartWidth = chartCanvas.clientWidth - 80;
+            const barWidth = 40;
+            const barSpacing = 20;
+            const margin = { top: 20, right: 40, bottom: 60, left: 60 };
+            
+            // Escala para la altura de las barras
+            const scaleFactor = chartHeight / (maxTime * 1.1);
+            
+            // Crear contenedor principal
+            const container = document.createElement('div');
+            container.style.position = 'relative';
+            container.style.width = '100%';
+            container.style.height = '100%';
+            container.style.overflow = 'visible';
+            
+            // 1. CREAR LÍNEAS DE REFERENCIA (GRID)
+            const gridContainer = document.createElement('div');
+            gridContainer.style.position = 'absolute';
+            gridContainer.style.top = '0';
+            gridContainer.style.left = margin.left + 'px';
+            gridContainer.style.right = margin.right + 'px';
+            gridContainer.style.bottom = margin.bottom + 'px';
+            gridContainer.style.zIndex = '1';
+            
+            // Crear 5 líneas horizontales
+            for (let i = 0; i <= 5; i++) {
+                const yPos = (chartHeight / 5) * i;
+                const timeValue = (maxTime / 5) * (5 - i);
+                
+                // Línea de grid
+                const gridLine = document.createElement('div');
+                gridLine.style.position = 'absolute';
+                gridLine.style.left = '0';
+                gridLine.style.right = '0';
+                gridLine.style.top = yPos + 'px';
+                gridLine.style.borderTop = '1px solid rgba(0,0,0,0.08)';
+                gridContainer.appendChild(gridLine);
+                
+                // Etiqueta del eje Y
+                const yLabel = document.createElement('div');
+                yLabel.style.position = 'absolute';
+                yLabel.style.left = '-45px';
+                yLabel.style.top = yPos + 'px';
+                yLabel.style.transform = 'translateY(-50%)';
+                yLabel.style.fontSize = '11px';
+                yLabel.style.color = '#666';
+                yLabel.style.fontWeight = '500';
+                yLabel.textContent = timeValue.toFixed(0) + 's';
+                gridContainer.appendChild(yLabel);
+            }
+            
+            container.appendChild(gridContainer);
+            
+            // 2. CREAR BARRAS
+            const barsContainer = document.createElement('div');
+            barsContainer.style.position = 'absolute';
+            barsContainer.style.top = '0';
+            barsContainer.style.left = margin.left + 'px';
+            barsContainer.style.right = margin.right + 'px';
+            barsContainer.style.bottom = margin.bottom + 'px';
+            barsContainer.style.display = 'flex';
+            barsContainer.style.alignItems = 'flex-end';
+            barsContainer.style.justifyContent = 'space-around';
+            barsContainer.style.zIndex = '2';
+            
+            chartData.forEach((data, index) => {
+                const barHeight = data.time * scaleFactor;
+                
+                // Contenedor de barra individual
+                const barGroup = document.createElement('div');
+                barGroup.style.display = 'flex';
+                barGroup.style.flexDirection = 'column';
+                barGroup.style.alignItems = 'center';
+                barGroup.style.justifyContent = 'flex-end';
+                barGroup.style.height = '100%';
+                barGroup.style.position = 'relative';
+                barGroup.style.width = barWidth + 'px';
+                
+                // La barra
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.width = '30px';
+                bar.style.height = barHeight + 'px';
+                bar.style.backgroundColor = data.isBottleneck ? '#e74c3c' : '#3498db';
+                bar.style.background = data.isBottleneck 
+                    ? 'linear-gradient(to top, #e74c3c 0%, #c0392b 100%)' 
+                    : 'linear-gradient(to top, #3498db 0%, #2980b9 100%)';
+                bar.style.borderRadius = '4px 4px 0 0';
+                bar.style.position = 'relative';
+                bar.style.cursor = 'pointer';
+                bar.style.transition = 'all 0.3s ease';
+                bar.style.boxShadow = data.isBottleneck 
+                    ? '0 4px 8px rgba(231, 76, 60, 0.3)' 
+                    : '0 4px 8px rgba(52, 152, 219, 0.3)';
+                bar.title = `${data.name}: ${data.time.toFixed(2)} segundos`;
+                
+                // Efecto hover
+                bar.onmouseover = function() {
+                    this.style.transform = 'translateY(-5px) scale(1.05)';
+                    this.style.boxShadow = data.isBottleneck 
+                        ? '0 8px 16px rgba(231, 76, 60, 0.4)' 
+                        : '0 8px 16px rgba(52, 152, 219, 0.4)';
+                };
+                
+                bar.onmouseout = function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.boxShadow = data.isBottleneck 
+                        ? '0 4px 8px rgba(231, 76, 60, 0.3)' 
+                        : '0 4px 8px rgba(52, 152, 219, 0.3)';
+                };
+                
+                // Valor numérico sobre la barra
+                const valueLabel = document.createElement('div');
+                valueLabel.style.position = 'absolute';
+                valueLabel.style.top = '-25px';
+                valueLabel.style.left = '0';
+                valueLabel.style.right = '0';
+                valueLabel.style.textAlign = 'center';
+                valueLabel.style.fontSize = '11px';
+                valueLabel.style.fontWeight = 'bold';
+                valueLabel.style.color = data.isBottleneck ? '#c0392b' : '#2c3e50';
+                valueLabel.textContent = data.time.toFixed(0) + 's';
+                
+                bar.appendChild(valueLabel);
+                
+                // Etiqueta del proceso (eje X)
+                const xLabel = document.createElement('div');
+                xLabel.className = 'process-label';
+                xLabel.style.marginTop = '10px';
+                xLabel.style.fontSize = '11px';
+                xLabel.style.color = '#555';
+                xLabel.style.textAlign = 'center';
+                xLabel.style.transform = 'rotate(-45deg)';
+                xLabel.style.transformOrigin = 'top left';
+                xLabel.style.whiteSpace = 'nowrap';
+                xLabel.style.width = '80px';
+                xLabel.textContent = data.name;
+                
+                // Indicador de bottleneck
+                if (data.isBottleneck) {
+                    const bottleneckBadge = document.createElement('div');
+                    bottleneckBadge.style.position = 'absolute';
+                    bottleneckBadge.style.top = '-45px';
+                    bottleneckBadge.style.left = '50%';
+                    bottleneckBadge.style.transform = 'translateX(-50%)';
+                    bottleneckBadge.style.background = '#e74c3c';
+                    bottleneckBadge.style.color = 'white';
+                    bottleneckBadge.style.padding = '2px 6px';
+                    bottleneckBadge.style.borderRadius = '10px';
+                    bottleneckBadge.style.fontSize = '9px';
+                    bottleneckBadge.style.fontWeight = 'bold';
+                    bottleneckBadge.style.whiteSpace = 'nowrap';
+                    bottleneckBadge.textContent = 'BOTTLENECK';
+                    barGroup.appendChild(bottleneckBadge);
+                }
+                
+                barGroup.appendChild(bar);
+                barGroup.appendChild(xLabel);
+                barsContainer.appendChild(barGroup);
+            });
+            
+            container.appendChild(barsContainer);
+            
+            // 3. LÍNEA DE BOTTLENECK
+            if (bottleneckValue > 0) {
+                const bottleneckLine = document.createElement('div');
+                bottleneckLine.style.position = 'absolute';
+                bottleneckLine.style.left = margin.left + 'px';
+                bottleneckLine.style.right = margin.right + 'px';
+                bottleneckLine.style.borderTop = '2px dashed #e74c3c';
+                bottleneckLine.style.zIndex = '3';
+                
+                const linePosition = chartHeight - (bottleneckValue * scaleFactor);
+                bottleneckLine.style.top = linePosition + 'px';
+                
+                // Etiqueta de la línea
+                const lineLabel = document.createElement('div');
+                lineLabel.style.position = 'absolute';
+                lineLabel.style.right = '-35px';
+                lineLabel.style.top = '-10px';
+                lineLabel.style.background = '#e74c3c';
+                lineLabel.style.color = 'white';
+                lineLabel.style.padding = '3px 8px';
+                lineLabel.style.borderRadius = '12px';
+                lineLabel.style.fontSize = '10px';
+                lineLabel.style.fontWeight = 'bold';
+                lineLabel.style.whiteSpace = 'nowrap';
+                lineLabel.textContent = bottleneckValue.toFixed(0) + 's';
+                
+                bottleneckLine.appendChild(lineLabel);
+                container.appendChild(bottleneckLine);
+            }
+            
+            // 4. ETIQUETAS DE LOS EJES
+            // Etiqueta eje Y
+            const yAxisLabel = document.createElement('div');
+            yAxisLabel.style.position = 'absolute';
+            yAxisLabel.style.left = '10px';
+            yAxisLabel.style.top = '50%';
+            yAxisLabel.style.transform = 'translateY(-50%) rotate(-90deg)';
+            yAxisLabel.style.transformOrigin = 'center';
+            yAxisLabel.style.fontSize = '12px';
+            yAxisLabel.style.color = '#666';
+            yAxisLabel.style.fontWeight = '600';
+            yAxisLabel.textContent = 'Tiempo (segundos)';
+            container.appendChild(yAxisLabel);
+            
+            // Etiqueta eje X
+            const xAxisLabel = document.createElement('div');
+            xAxisLabel.style.position = 'absolute';
+            xAxisLabel.style.left = '50%';
+            xAxisLabel.style.bottom = '10px';
+            xAxisLabel.style.transform = 'translateX(-50%)';
+            xAxisLabel.style.fontSize = '12px';
+            xAxisLabel.style.color = '#666';
+            xAxisLabel.style.fontWeight = '600';
+            xAxisLabel.textContent = 'Procesos';
+            container.appendChild(xAxisLabel);
+            
+            // 5. INFO DE TOTALES
+            const infoBox = document.createElement('div');
+            infoBox.style.position = 'absolute';
+            infoBox.style.top = '10px';
+            infoBox.style.right = '10px';
+            infoBox.style.background = 'rgba(255, 255, 255, 0.9)';
+            infoBox.style.padding = '10px 15px';
+            infoBox.style.borderRadius = '8px';
+            infoBox.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            infoBox.style.fontSize = '12px';
+            infoBox.style.zIndex = '4';
+            infoBox.innerHTML = `
+                <div style="font-weight: bold; color: #2c3e50; margin-bottom: 5px;">Resumen:</div>
+                <div style="display: flex; gap: 15px;">
+                    <div>
+                        <div style="color: #666; font-size: 10px;">Procesos</div>
+                        <div style="font-weight: bold; color: #3498db;">${chartData.length}</div>
+                    </div>
+                    <div>
+                        <div style="color: #666; font-size: 10px;">Bottleneck</div>
+                        <div style="font-weight: bold; color: #e74c3c;">${bottleneckValue.toFixed(0)}s</div>
+                    </div>
+                    <div>
+                        <div style="color: #666; font-size: 10px;">Total HC</div>
+                        <div style="font-weight: bold; color: #2ecc71;">${calculateTotalHC()}</div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(infoBox);
+            
+            // Insertar todo en el canvas
+            chartCanvas.appendChild(container);
+            
+            console.log("✅ Gráfica generada exitosamente");
+        }
+
+        // Función auxiliar para calcular total HC
+        function calculateTotalHC() {
+            let total = 0;
+            processes.forEach(process => {
+                const hc = parseInt(process.headCount) || 0;
+                total += hc;
+            });
+            return total;
+        }
+
+        // ========== GESTIÓN DE ALMACENAMIENTO ==========
+
+        function saveToStorage() {
+            try {
+                const config = {
+                    processes: processes,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+            } catch (error) {
+                console.error('Error al guardar configuración:', error);
+            }
+        }
+
+        function loadFromStorage() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const config = JSON.parse(saved);
+                    if (config.processes && Array.isArray(config.processes)) {
+                        processes = config.processes;
+                        return true;
+                    }
+                }
+            } catch (error) {
+                console.error('Error al cargar configuración:', error);
+            }
+            return false;
+        }
+
+        // ========== FUNCIONES DE INTERFAZ ==========
+
+        function saveAndClear() {
+            try {
+                const config = {
+                    processes: JSON.parse(JSON.stringify(processes)),
+                    timestamp: new Date().toISOString(),
+                    name: `Config ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`
+                };
+                
+                let history = [];
+                const savedHistory = localStorage.getItem(HISTORY_KEY);
+                if (savedHistory) {
+                    history = JSON.parse(savedHistory);
+                }
+                
+                history.unshift(config);
+                
+                if (history.length > 10) {
+                    history = history.slice(0, 10);
+                }
+                
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+                configurationHistory = history;
+                
+                clearTable();
+                
+                alert('✅ Configuración guardada en el historial y tabla limpiada');
+                
+            } catch (error) {
+                console.error('Error al guardar configuración:', error);
+                alert('❌ Error al guardar la configuración');
+            }
+        }
+
+        function clearTable() {
+            processes = [];
+            processes.push({
+                name: 'Process 1',
+                handSutTime: '',
+                imtSutTime: '',
+                machSutTime: '',
+                Mach: '',
+                headCount: '',
+                modePerEC: '',
+                outputPerCycle: '',
+                operatorBusTime: 0,
+                machinesBusTime: 0,
+                sutTimeForUnit: 0
+            });
+            renderTable();
+            updateChart();
+        }
+
+        function loadHistory() {
+            try {
+                const savedHistory = localStorage.getItem(HISTORY_KEY);
+                if (!savedHistory) {
+                    alert('📭 No hay configuraciones en el historial');
+                    return;
+                }
+                
+                const history = JSON.parse(savedHistory);
+                configurationHistory = history;
+                
+                const modal = document.createElement('div');
+                modal.className = 'modal-overlay';
+                modal.id = 'historyModal';
+                modal.onclick = function(e) {
+                    if (e.target === modal) closeModal();
+                };
+                
+                const modalContent = document.createElement('div');
+                modalContent.className = 'modal-content';
+                modalContent.onclick = function(e) {
+                    e.stopPropagation();
+                };
+                
+                let historyHTML = '<h3 style="color: #2c3e50; margin-bottom: 20px;">';
+                historyHTML += '<i class="fas fa-history"></i> Seleccionar Configuración</h3>';
+                
+                if (history.length === 0) {
+                    historyHTML += '<p style="text-align:center;color:#666;">No hay configuraciones guardadas</p>';
+                } else {
+                    history.forEach((config, index) => {
+                        const date = new Date(config.timestamp);
+                        const totalHC = calculateTotalHCFromConfig(config.processes);
+                        
+                        historyHTML += `
+                            <div class="history-item">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>${config.name || 'Configuración ' + (index + 1)}</strong>
+                                        <div style="font-size: 12px; color: #666; margin-top: 2px;">
+                                            ${date.toLocaleDateString()} ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                        </div>
+                                        <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                                            Procesos: ${config.processes.length} | Total HC: ${totalHC}
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 5px;">
+                                        <button class="action-btn edit-btn" onclick="loadFromHistory(${index})">
+                                            <i class="fas fa-download"></i> Cargar
+                                        </button>
+                                        <button class="action-btn delete-btn" onclick="deleteFromHistory(${index})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 text-center">
-                                <i class="bi bi-chat-quote" style="font-size: 4rem; opacity: 0.8;"></i>
-                            </div>
-                        </div>
+                        `;
+                    });
+                }
+                
+                historyHTML += `
+                    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                        <button class="sidebar-btn" onclick="closeModal()" style="background: #95a5a6;">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                    </div>
+                `;
+                
+                modalContent.innerHTML = historyHTML;
+                modal.appendChild(modalContent);
+                document.body.appendChild(modal);
+                
+            } catch (error) {
+                console.error('Error al cargar historial:', error);
+                alert('❌ Error al cargar el historial');
+            }
+        }
+
+        function calculateTotalHCFromConfig(processList) {
+            let total = 0;
+            processList.forEach(process => {
+                const hc = parseInt(process.headCount);
+                if (!isNaN(hc)) {
+                    total += hc;
+                }
+            });
+            return total;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('historyModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function loadFromHistory(index) {
+            if (configurationHistory[index]) {
+                processes = JSON.parse(JSON.stringify(configurationHistory[index].processes));
+                renderTable();
+                updateChart();
+                closeModal();
+                alert('✅ Configuración cargada correctamente');
+            }
+        }
+
+        function deleteFromHistory(index) {
+            if (confirm('¿Eliminar esta configuración del historial?')) {
+                configurationHistory.splice(index, 1);
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(configurationHistory));
+                closeModal();
+                loadHistory();
+            }
+        }
+
+        function clearWithConfirmation() {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.id = 'confirmModal';
+            modal.onclick = function(e) {
+                if (e.target === modal) closeConfirmModal();
+            };
+            
+            modal.innerHTML = `
+                <div class="modal-content" onclick="event.stopPropagation()">
+                    <h3 style="color: #2c3e50; margin-bottom: 15px;">
+                        <i class="fas fa-exclamation-triangle"></i> Confirmar Eliminación
+                    </h3>
+                    <p>¿Estás seguro de que deseas eliminar toda la configuración actual?</p>
+                    <p style="margin-top: 10px; color: #666; font-size: 14px;">Esta acción no se puede deshacer.</p>
+                    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 25px;">
+                        <button class="sidebar-btn" onclick="closeConfirmModal()" style="background: #95a5a6;">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button class="sidebar-btn" onclick="performClear()" style="background: #e74c3c;">
+                            <i class="fas fa-trash"></i> Eliminar Todo
+                        </button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            `;
+            
+            document.body.appendChild(modal);
+        }
 
-    <!-- FAQ Section -->
-    <section class="py-5">
-        <div class="container">
-            <h2 class="section-title">Preguntas Frecuentes</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <div class="accordion" id="faqAccordion">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                    ¿Qué garantías ofrecen?
-                                </button>
-                            </h2>
-                            <div id="faq1" class="accordion-collapse collapse show">
-                                <div class="accordion-body">
-                                    60 días de garantía por bugs y errores críticos. Soporte técnico incluido durante el periodo de garantía.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                    ¿Incluyen hosting y dominio?
-                                </button>
-                            </h2>
-                            <div id="faq2" class="accordion-collapse collapse">
-                                <div class="accordion-body">
-                                    No incluidos en el precio base. Puedo ayudarte a configurar hosting (aprox. $2,100-3,100 MXN/año) y dominio ($200-260 MXN/año).
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                    ¿Ofrecen mantenimiento posterior?
-                                </button>
-                            </h2>
-                            <div id="faq3" class="accordion-collapse collapse">
-                                <div class="accordion-body">
-                                    Sí, ofrezco planes de mantenimiento desde $860 MXN/mes para actualizaciones, backups y soporte continuo.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        function closeConfirmModal() {
+            const modal = document.getElementById('confirmModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-        <div class="container text-center">
-            <p class="mb-2">&copy; 2024 Ingeniero de Software Freelance Jose Luis Rodriguez Elicerio. Todos los derechos reservados.</p>
-            <p class="text-muted mb-0">Especialista en desarrollo de software</p>
-        </div>
-    </footer>
+        function performClear() {
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+                clearTable();
+                closeConfirmModal();
+                alert('✅ Configuración actual eliminada correctamente');
+            } catch (error) {
+                console.error('Error al eliminar:', error);
+                alert('❌ Error al eliminar la configuración');
+            }
+        }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            
+            const date = new Date();
+            const fileName = `Line_Balance_Report_${date.getFullYear()}_${date.getMonth()+1}_${date.getDate()}.pdf`;
+            
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const pageWidth = doc.internal.pageSize.getWidth();
+            
+            // Título
+            doc.setFontSize(20);
+            doc.setTextColor(44, 62, 80);
+            doc.text("Reporte Industrial - Balanceo de Línea", pageWidth / 2, 20, { align: 'center' });
+            
+            // Fecha
+            doc.setFontSize(12);
+            doc.setTextColor(100, 100, 100);
+            doc.text(`Generado: ${new Date().toLocaleDateString('es-ES', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            })}`, pageWidth / 2, 30, { align: 'center' });
+            
+            // Métricas
+            doc.setFontSize(14);
+            doc.setTextColor(44, 62, 80);
+            doc.text("Métricas de Performance", 20, 45);
+            
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text(`LBR (Line Balance Rate): ${document.getElementById('balancePercentage').textContent}`, 25, 55);
+            doc.text(`UPH (Units Per Hour): ${document.getElementById('upmValue').textContent}`, 25, 63);
+            doc.text(`Bottleneck Time: ${document.getElementById('bottleneckTime').textContent}`, 25, 71);
+            doc.text(`Goal Status: ${document.getElementById('goldStatus').textContent}`, 25, 79);
+            
+            // Datos de procesos
+            let yPos = 95;
+            doc.setFontSize(14);
+            doc.setTextColor(44, 62, 80);
+            doc.text("Datos de Procesos (Ingresados Manualmente)", 20, yPos);
+            yPos += 10;
+            
+            // Encabezados de tabla
+            const headers = ["Proceso", "HAND", "IMT", "MACH", "HC", "Std Time"];
+            const colWidths = [30, 20, 20, 20, 15, 25];
+            
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            let xPos = 20;
+            headers.forEach((header, i) => {
+                doc.text(header, xPos, yPos);
+                xPos += colWidths[i];
+            });
+            
+            // Datos
+            doc.setFont(undefined, 'normal');
+            processes.forEach((process, index) => {
+                yPos += 8;
+                xPos = 20;
+                
+                const rowData = [
+                    process.name.substring(0, 10),
+                    process.handSutTime || '0.00',
+                    process.imtSutTime || '0.00',
+                    process.machSutTime || '0.00',
+                    process.headCount || '0',
+                    (process.sutTimeForUnit || 0).toFixed(2)
+                ];
+                
+                rowData.forEach((cell, colIndex) => {
+                    doc.text(cell, xPos, yPos);
+                    xPos += colWidths[colIndex];
+                });
+                
+                if (yPos > 270) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+            });
+            
+            // Notas
+           // yPos += 15;
+         //   doc.setFontSize(9);
+          //  doc.setTextColor(100, 100, 100);
+          //  doc.text("Notas:", 20, yPos);
+          //  yPos += 6;
+          //  doc.text("1. Todos los campos son ingresados manualmente por el usuario", 25, yPos);
+           // yPos += 5;
+          // doc.text("2. UPH = Σ Head Count (Suma manual de todos los Head Count)", 25, yPos);
+          //  yPos += 5;
+         //   doc.text("3. Operator Bus/Time = Std Time for 1 unit (calculado automáticamente)", 25, yPos);
+            
+            // Pie de página
+            const pageHeight = doc.internal.pageSize.getHeight();
+            doc.setFontSize(8);
+            doc.setTextColor(100, 100, 100);
+            doc.text("© 2025 Line Balance Dashboard - Sistema Industrial Desarrollado por Jose Luis Rodriguez Elicerio, Estudiante de desarrollo de software Team GDL ", 
+                    pageWidth / 2, pageHeight - 10, { align: 'center' });
+            
+            // Guardar
+            doc.save(fileName);
+            db.collection("procesos").add({
+    nombre: proceso.nombre,
+    stdTime: proceso.stdTime,
+    headCount: proceso.headCount,
+    fecha: new Date()
+})
+.then((docRef) => {
+    console.log("Guardado con ID:", docRef.id);
+})
+.catch((error) => {
+    console.error("Error al guardar:", error);
+});
+            
+            alert(`✅ PDF generado exitosamente: ${fileName}`);
+        }
+
+        // ========== FUNCIONES AUXILIARES ==========
+
+        function importData() {
+            alert('Funcionalidad de importación en desarrollo');
+        }
+
+        function editProcess(index) {
+            const rows = document.querySelectorAll('#tableBody tr');
+            if (rows[index]) {
+                const inputs = rows[index].querySelectorAll('input');
+                if (inputs[0]) inputs[0].focus();
+            }
+        }
+
+        // Asegurar que updateChart se llame al redimensionar ventana
+        window.addEventListener('resize', function() {
+            setTimeout(() => {
+                updateChart();
+            }, 300);
+        });
+
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBUl2jIOlAIndnEUdVH1UQmIdmKLlUX0sY",
+  authDomain: "pagina-web-9cb53.firebaseapp.com",
+  projectId: "pagina-web-9cb53",
+  storageBucket: "pagina-web-9cb53.firebasestorage.app",
+  messagingSenderId: "1072705733316",
+  appId: "1:1072705733316:web:bee55f7cf7912d54f8ff91",
+  measurementId: "G-1QMS9RCY63"
+};
+
+  // Inicializa Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+    </script>
+    <!-- Firebase App (core) -->
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+
+<!-- Firestore -->
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
 </body>
 </html>
